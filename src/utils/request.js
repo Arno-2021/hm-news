@@ -1,4 +1,5 @@
 import axios from 'axios'
+import store from '@/store'
 const instance = axios.create({
   baseURL: 'http://toutiao.itheima.net',
   timeout: 5000
@@ -7,6 +8,7 @@ const instance = axios.create({
 instance.interceptors.request.use(
   function(config) {
     // 在发送请求之前做些什么
+    config.headers.authorization = 'Bearer ' + store.state.user.token
     return config
   },
   function(error) {

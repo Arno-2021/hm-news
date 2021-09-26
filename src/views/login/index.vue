@@ -28,7 +28,7 @@
 
 <script>
 import { login } from '@/api/user'
-import { getToken, setToken } from '@/utils/storage'
+// import { getToken } from '@/utils/storage'
 export default {
   name: 'Login',
   data() {
@@ -57,14 +57,10 @@ export default {
     async onSubmit() {
       try {
         const res = await login(this.tel, this.code)
-        // localStorage.setItem('hm-news-token', JSON.stringify(res.data.token))
-        setToken(res.data.token)
+        // setToken(res.data.token)
         this.$toast.success('登录成功')
-        this.$store.commit(
-          'user/setStoreToken',
-          // JSON.parse(localStorage.getItem('hm-news-token'))
-          getToken()
-        )
+        this.$store.commit('user/setStoreToken', res.data.token)
+        this.$router.push('/')
       } catch (e) {
         this.$toast.fail('登录失败')
       }

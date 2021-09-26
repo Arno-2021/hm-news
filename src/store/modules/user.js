@@ -1,11 +1,18 @@
+import { getToken, removeToken, setToken } from '@/utils/storage'
+const token = getToken()
 export default {
   namespaced: true,
   state: {
-    token: {}
+    token
   },
   mutations: {
     setStoreToken(state, token) {
-      state.token = token
+      setToken(token)
+      state.token = getToken()
+    },
+    removeStoreToken(state) {
+      removeToken()
+      state.token = {}
     }
   }
 }
