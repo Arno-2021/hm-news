@@ -7,8 +7,8 @@ import Home from '@/views/layout/Home'
 import Question from '@/views/layout/Question'
 import Video from '@/views/layout/Video'
 import User from '@/views/layout/User'
+import store from '@/store'
 Vue.use(VueRouter)
-
 const routes = [
   {
     path: '/',
@@ -27,5 +27,18 @@ const routes = [
 const router = new VueRouter({
   routes
 })
+const tourUrls = ['/user']
 
+router.beforeEach((to, from, next) => {
+  const token = store.state.user.token.token
+  if (token) {
+    next()
+  } else {
+    if (tourUrls.some(item => item === to.path)) {
+      router.push('/login')
+    } else {
+      next()
+    }
+  }
+})
 export default router

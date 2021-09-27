@@ -39,27 +39,34 @@
 </template>
 
 <script>
-import { getProfile } from '@/api/user'
-// import { removeToken } from '@/utils/storage'
+// import { getProfile } from '@/api/user'
+import { mapMutations, mapState, mapActions } from 'vuex'
 export default {
   name: 'User',
-  async created() {
-    const res = await getProfile()
-    this.userInfo = res.data
+  created() {
+    try {
+      this.storeGetProfile()
+      // const res = await getProfile()
+      // this.userInfo = res.data
+      // this.storeUserInfo(res.data)
+    } catch (e) {}
   },
   data() {
-    return {
-      userInfo: ''
-    }
+    return {}
+  },
+  computed: {
+    ...mapState('user', ['userInfo'])
   },
   methods: {
+    ...mapActions('user', ['storeGetProfile']),
+    ...mapMutations('user', ['removeStoreToken', 'storeUserInfo']),
     async logoutFn() {
       try {
         await this.$dialog.confirm({
           title: '温馨提示',
           message: '是否确认退出登录'
         })
-        this.$store.commit('user/removeStoreToken')
+        this.removeStoreToken()
         this.$router.push('/login')
       } catch (e) {}
     }

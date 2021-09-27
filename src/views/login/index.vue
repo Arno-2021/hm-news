@@ -59,7 +59,7 @@ export default {
         const res = await login(this.tel, this.code)
         // setToken(res.data.token)
         this.$toast.success('登录成功')
-        this.$store.commit('user/setStoreToken', res.data.token)
+        this.$store.commit('user/setStoreToken', res.data)
         this.$router.push('/')
       } catch (e) {
         this.$toast.fail('登录失败')

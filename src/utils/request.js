@@ -1,5 +1,6 @@
 import axios from 'axios'
 import store from '@/store'
+import router from '@/router'
 const instance = axios.create({
   baseURL: 'http://toutiao.itheima.net',
   timeout: 5000
@@ -8,7 +9,7 @@ const instance = axios.create({
 instance.interceptors.request.use(
   function(config) {
     // 在发送请求之前做些什么
-    config.headers.authorization = 'Bearer ' + store.state.user.token
+    config.headers.authorization = 'Bearer ' + store.state.user.token.token
     return config
   },
   function(error) {
@@ -24,7 +25,10 @@ instance.interceptors.response.use(
     return response.data
   },
   function(error) {
-    // 对响应错误做点什么
+    if (error.response.status === 401) {
+      store.commit('user/removeStoreToken')
+      router.push('/login')
+    }
     return Promise.reject(error)
   }
 )
