@@ -22,8 +22,14 @@
                   }"
                 />
               </van-grid-item>
-            </van-grid> </template
-        ></van-cell>
+              <div class="meta">
+                <span>作者：{{ item.aut_name }}</span>
+                <span>评论数：{{ item.comm_count }}</span>
+                <span>{{ item.pubdate | fromNow }}</span>
+              </div>
+            </van-grid>
+          </template></van-cell
+        >
       </van-list>
     </van-pull-refresh>
   </div>
@@ -31,6 +37,7 @@
 
 <script>
 import { getNewsList } from '@/api/article'
+import moment from 'moment'
 export default {
   name: 'NewsList',
   props: ['id'],
@@ -61,6 +68,12 @@ export default {
       this.list = res.data.results
       this.refreshing = false
     }
+  },
+  filters: {
+    fromNow(val) {
+      moment.locale('zh-cn')
+      return moment(val, 'YYYY-MM-DD hh:mm:ss').fromNow()
+    }
   }
 }
 </script>
@@ -77,5 +90,8 @@ export default {
 .threeImg {
   width: 100%;
   height: 80px;
+}
+.meta span {
+  margin-right: 10px;
 }
 </style>
