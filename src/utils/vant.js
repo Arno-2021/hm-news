@@ -14,9 +14,21 @@ import {
   Row,
   Cell,
   CellGroup,
-  Dialog
+  Dialog,
+  List,
+  Tab,
+  Tabs,
+  Grid,
+  GridItem,
+  PullRefresh
 } from 'vant'
 
+Vue.use(PullRefresh)
+Vue.use(Grid)
+Vue.use(GridItem)
+Vue.use(Tab)
+Vue.use(Tabs)
+Vue.use(List)
 Vue.use(Dialog)
 Vue.use(Cell)
 Vue.use(CellGroup)
