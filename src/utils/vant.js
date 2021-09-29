@@ -20,9 +20,15 @@ import {
   Tabs,
   Grid,
   GridItem,
-  PullRefresh
+  PullRefresh,
+  Lazyload,
+  Popup,
+  ActionSheet
 } from 'vant'
 
+Vue.use(ActionSheet)
+Vue.use(Popup)
+Vue.use(Lazyload)
 Vue.use(PullRefresh)
 Vue.use(Grid)
 Vue.use(GridItem)

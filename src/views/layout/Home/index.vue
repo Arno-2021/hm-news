@@ -22,31 +22,63 @@
       </template>
     </van-nav-bar>
     <van-tabs v-model="active">
-      <van-tab :title="item.name" v-for="item in tabsList" :key="item.id">
+      <van-tab :title="item.name" v-for="item in userList" :key="item.id">
         <NewsList :id="item.id"></NewsList>
       </van-tab>
     </van-tabs>
+    <div class="bar-btn">
+      <van-icon name="wap-nav" @click="sheetShow = true" />
+    </div>
+    <div class="tags-controller">
+      <van-action-sheet v-model="sheetShow" title="标题">
+        <div class="content">
+          <TagsController
+            :active="active"
+            @switchActive="switchActiveFn"
+          ></TagsController>
+        </div>
+      </van-action-sheet>
+    </div>
   </div>
 </template>
 
 <script>
 import NewsList from './NewsList.vue'
-import { getTabs } from '@/api/article'
+import TagsController from './TagsController.vue'
+import { mapState } from 'vuex'
+import { getChannel } from '@/utils/storage'
 export default {
   name: 'Home',
   components: {
-    NewsList
+    NewsList,
+    TagsController
   },
-  async created() {
-    try {
-      const res = await getTabs()
-      this.tabsList = res.data.channels
-    } catch (e) {}
+  created() {
+    if (this.$store.state.user.token.token) {
+      this.$store.dispatch('channels/actionGetUserList')
+    } else {
+      const res = getChannel()
+      if (res) {
+        this.$store.commit('channels/setUserList', res)
+        console.log(res)
+      } else {
+        this.$store.dispatch('channels/actionGetUserList')
+      }
+    }
+    this.$store.dispatch('channels/actionGetAllList')
   },
   data() {
     return {
       active: 0,
-      tabsList: []
+      sheetShow: false
+    }
+  },
+  computed: {
+    ...mapState('channels', ['userList'])
+  },
+  methods: {
+    switchActiveFn(index) {
+      this.active = index
     }
   }
 }
