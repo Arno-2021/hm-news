@@ -60,7 +60,6 @@ export default {
       const res = getChannel()
       if (res) {
         this.$store.commit('channels/setUserList', res)
-        console.log(res)
       } else {
         this.$store.dispatch('channels/actionGetUserList')
       }
@@ -77,8 +76,9 @@ export default {
     ...mapState('channels', ['userList'])
   },
   methods: {
-    switchActiveFn(index) {
+    switchActiveFn(index, flag = false) {
       this.active = index
+      this.sheetShow = flag
     }
   }
 }

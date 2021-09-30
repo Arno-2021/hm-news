@@ -73,10 +73,10 @@ export default {
       const res = this.userList.filter(item => item.id !== id)
       this.setUserList(res)
       if (index === this.active) {
-        this.$emit('switchActive', 0)
+        this.$emit('switchActive', 0, true)
       }
       if (index < this.active) {
-        this.$emit('switchActive', this.active - 1)
+        this.$emit('switchActive', this.active - 1, true)
       }
       if (this.token.token) {
         await delUserTag(id)
