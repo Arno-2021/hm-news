@@ -8,6 +8,8 @@ import Question from '@/views/layout/Question'
 import Video from '@/views/layout/Video'
 import User from '@/views/layout/User'
 import store from '@/store'
+import Search from '@/views/Search'
+import Results from '@/views/Search/Results'
 Vue.use(VueRouter)
 const routes = [
   {
@@ -21,6 +23,8 @@ const routes = [
     ]
   },
   { path: '/login', component: Login },
+  { path: '/search', component: Search },
+  { path: '/search/results', component: Results },
   { path: '*', component: NotFound }
 ]
 

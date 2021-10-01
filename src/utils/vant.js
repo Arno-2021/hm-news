@@ -23,9 +23,11 @@ import {
   PullRefresh,
   Lazyload,
   Popup,
-  ActionSheet
+  ActionSheet,
+  Search
 } from 'vant'
 
+Vue.use(Search)
 Vue.use(ActionSheet)
 Vue.use(Popup)
 Vue.use(Lazyload)
