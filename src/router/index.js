@@ -10,6 +10,7 @@ import User from '@/views/layout/User'
 import store from '@/store'
 import Search from '@/views/Search'
 import Results from '@/views/Search/Results'
+import SearchContent from '@/views/Search/SearchContent'
 Vue.use(VueRouter)
 const routes = [
   {
@@ -25,6 +26,7 @@ const routes = [
   { path: '/login', component: Login },
   { path: '/search', component: Search },
   { path: '/search/results', component: Results },
+  { path: '/search/results/searchcontent/:id', component: SearchContent },
   { path: '*', component: NotFound }
 ]
 

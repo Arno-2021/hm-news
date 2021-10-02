@@ -1,5 +1,6 @@
 const TOKEN_NAME = 'hm-news-token'
 const CHANNEL_NAME = 'hm-news-channel'
+const HISTORY_NAME = 'hm-news-history'
 export function setToken(token) {
   localStorage.setItem(TOKEN_NAME, JSON.stringify(token))
 }
@@ -14,4 +15,10 @@ export function setChannel(val) {
 }
 export function getChannel() {
   return JSON.parse(localStorage.getItem(CHANNEL_NAME))
+}
+export function setHistory(val) {
+  localStorage.setItem(HISTORY_NAME, JSON.stringify(val))
+}
+export function getHistory() {
+  return JSON.parse(localStorage.getItem(HISTORY_NAME))
 }

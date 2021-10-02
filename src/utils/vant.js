@@ -24,9 +24,13 @@ import {
   Lazyload,
   Popup,
   ActionSheet,
-  Search
+  Search,
+  Loading,
+  Divider
 } from 'vant'
 
+Vue.use(Loading)
+Vue.use(Divider)
 Vue.use(Search)
 Vue.use(ActionSheet)
 Vue.use(Popup)

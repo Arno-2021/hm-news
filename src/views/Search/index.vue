@@ -35,8 +35,13 @@
     <!-- 历史记录 -->
     <van-cell-group v-else>
       <van-cell title="历史记录"></van-cell>
-      <van-cell :title="item" v-for="item in history" :key="item">
-        <van-icon name="close" />
+      <van-cell
+        :title="item"
+        v-for="item in history"
+        :key="item"
+        @click="selectKeyword(item)"
+      >
+        <van-icon name="close" @click.stop="delHistory(item)" />
       </van-cell>
     </van-cell-group>
   </div>
@@ -44,13 +49,14 @@
 
 <script>
 import { getSuggetion } from '@/api/search'
+import { setHistory, getHistory } from '@/utils/storage'
 export default {
   name: 'Search',
   data() {
     return {
       keyword: '',
       suggetList: [],
-      history: []
+      history: getHistory() || []
     }
   },
   methods: {
@@ -67,7 +73,9 @@ export default {
           keyword
         }
       })
-      this.history.push(keyword)
+      this.history = this.history.filter(item => item !== keyword)
+      this.history.unshift(keyword)
+      setHistory(this.history)
     },
     selectKeyword(keyword) {
       this.$router.push({
@@ -76,7 +84,13 @@ export default {
           keyword
         }
       })
-      this.history.push(keyword)
+      this.history = this.history.filter(item => item !== keyword)
+      this.history.unshift(keyword)
+      setHistory(this.history)
+    },
+    delHistory(val) {
+      this.history = this.history.filter(item => item !== val)
+      setHistory(this.history)
     },
     inputFn() {
       clearTimeout(this.timerId)

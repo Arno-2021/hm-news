@@ -7,7 +7,12 @@
         finished-text="没有更多了"
         @load="onLoad"
       >
-        <van-cell v-for="item in list" :key="item.art_id" :title="item.title">
+        <van-cell
+          v-for="item in list"
+          :key="item.art_id"
+          :title="item.title"
+          @click="processArticle(item.art_id)"
+        >
           <template #label>
             <van-grid :border="false" :column-num="item.cover.type">
               <van-grid-item
@@ -29,7 +34,7 @@
                 <span
                   class="close"
                   v-if="token.token"
-                  @click="popupShowFn(item.art_id)"
+                  @click.stop="popupShowFn(item.art_id)"
                 >
                   <van-icon name="cross" lazy-load />
                 </span>
@@ -123,6 +128,9 @@ export default {
     popupShowFn(id) {
       this.popupShow = true
       this.artID = id
+    },
+    processArticle(id) {
+      this.$router.push(`/search/results/searchcontent/${id}`)
     }
   },
   computed: {

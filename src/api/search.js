@@ -11,3 +11,13 @@ export function getSuggetion(q) {
     }
   })
 }
+export function getSearchResults(page, q) {
+  return axios({
+    url: '/v1_0/search',
+    params: {
+      page,
+      per_page: 10,
+      q
+    }
+  })
+}
