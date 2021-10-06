@@ -60,7 +60,14 @@ export default {
         // setToken(res.data.token)
         this.$toast.success('登录成功')
         this.$store.commit('user/setStoreToken', res.data)
-        this.$router.push('/')
+        if (this.$route.query.flag) {
+          return this.$router.back()
+        }
+        if (this.$route.query.back) {
+          this.$router.push(this.$route.query.back)
+        } else {
+          this.$router.push('/')
+        }
       } catch (e) {
         this.$toast.fail('登录失败')
       }

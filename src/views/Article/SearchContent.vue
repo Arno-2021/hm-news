@@ -52,8 +52,9 @@
           type="primary"
           plain
           icon="good-job-o"
+          @click="likeFn"
         >
-          点赞
+          {{ article.attitude === 1 ? '取消点赞' : '点赞' }}
         </van-button>
         &nbsp;&nbsp;&nbsp;&nbsp;
         <van-button
@@ -68,13 +69,24 @@
         </van-button>
       </div>
     </div>
+    <Comment :artID="this.$route.params.id"></Comment>
   </div>
 </template>
 
 <script>
-import { getArticleContent, followAut, unfollowAut } from '@/api/article'
+import {
+  getArticleContent,
+  followAut,
+  unfollowAut,
+  likeArticle,
+  dislikeArticle
+} from '@/api/article'
+import Comment from './Comment.vue'
 export default {
   name: 'HmNewsSearchcontent',
+  components: {
+    Comment
+  },
   async created() {
     const res = await getArticleContent(this.$route.params.id)
     this.article = res.data
@@ -103,6 +115,25 @@ export default {
             this.$toast.success('取消关注成功')
             this.article.is_followed = false
           } catch {}
+        }
+      } else {
+        this.$router.push({
+          path: '/login',
+          query: {
+            back: this.$route.fullPath,
+            flag: true
+          }
+        })
+      }
+    },
+    async likeFn() {
+      if (this.$store.state.user.token.token) {
+        if (this.article.attitude === -1) {
+          await likeArticle(this.article.art_id)
+          this.article.attitude = 1
+        } else {
+          await dislikeArticle(this.article.art_id)
+          this.article.attitude = -1
         }
       } else {
         this.$router.push('/login')

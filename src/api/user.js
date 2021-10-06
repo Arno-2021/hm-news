@@ -24,3 +24,15 @@ export function getProfile() {
     // }
   })
 }
+/**
+ * 修改用户信息
+ * @param {*} data name昵称 gender性别 birthday生日
+ * @returns
+ */
+export function subEdit(data) {
+  return axios({
+    method: 'PATCH',
+    url: '/v1_0/user/profile',
+    data
+  })
+}

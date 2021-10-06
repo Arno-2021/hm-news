@@ -27,7 +27,12 @@ instance.interceptors.response.use(
   function(error) {
     if (error.response.status === 401) {
       store.commit('user/removeStoreToken')
-      router.push('/login')
+      router.push({
+        path: '/login',
+        query: {
+          back: router.currentRoute.fullPath
+        }
+      })
     }
     return Promise.reject(error)
   }

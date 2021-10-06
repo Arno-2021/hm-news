@@ -30,7 +30,7 @@
 
     <!-- 编辑入口 -->
     <van-cell-group class="user-group">
-      <van-cell icon="edit" title="编辑资料" is-link />
+      <van-cell icon="edit" title="编辑资料" is-link to='/user/edituserinfo'/>
       <van-cell icon="chat-o" title="小智同学" is-link />
       <van-cell icon="setting-o" title="系统设置" is-link />
       <van-cell icon="warning-o" title="退出登录" is-link @click="logoutFn" />

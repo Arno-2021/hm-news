@@ -10,7 +10,8 @@ import User from '@/views/layout/User'
 import store from '@/store'
 import Search from '@/views/Search'
 import Results from '@/views/Search/Results'
-import SearchContent from '@/views/Search/SearchContent'
+import SearchContent from '@/views/Article/SearchContent'
+import EditUserInfo from '@/views/layout/User/EditUserInfo'
 Vue.use(VueRouter)
 const routes = [
   {
@@ -27,6 +28,7 @@ const routes = [
   { path: '/search', component: Search },
   { path: '/search/results', component: Results },
   { path: '/search/results/searchcontent/:id', component: SearchContent },
+  { path: '/user/edituserinfo', component: EditUserInfo },
   { path: '*', component: NotFound }
 ]
 
@@ -41,7 +43,12 @@ router.beforeEach((to, from, next) => {
     next()
   } else {
     if (tourUrls.some(item => item === to.path)) {
-      router.push('/login')
+      router.push({
+        path: '/login',
+        query: {
+          back: to.fullPath
+        }
+      })
     } else {
       next()
     }
