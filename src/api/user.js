@@ -36,3 +36,15 @@ export function subEdit(data) {
     data
   })
 }
+/**
+ * 上传用户头像
+ * @param {*} data 上传头像FormDate
+ * @returns
+ */
+export function editAvatar(data) {
+  return axios({
+    url: '/v1_0/user/photo',
+    method: 'PATCH',
+    data
+  })
+}

@@ -24,17 +24,42 @@ instance.interceptors.response.use(
     // 对响应数据做点什么
     return response.data
   },
-  function(error) {
+  async function(error) {
+    const token = store.state.user.token.token
+    const refreshToken = store.state.user.token.refresh_token
     if (error.response.status === 401) {
-      store.commit('user/removeStoreToken')
-      router.push({
-        path: '/login',
-        query: {
-          back: router.currentRoute.fullPath
+      if (token) {
+        try {
+          const res = await axios({
+            method: 'PUT',
+            url: 'http://toutiao.itheima.net/v1_0/authorizations',
+            headers: {
+              Authorization: `Bearer ${refreshToken}`
+            }
+          })
+          store.commit('user/setStoreToken', {
+            token: res.data.data.token,
+            refresh_token: refreshToken
+          })
+          return instance(error.config)
+        } catch (e) {
+          toLogin()
         }
-      })
+      } else {
+        toLogin()
+      }
+    } else {
+      return Promise.reject(error)
     }
-    return Promise.reject(error)
   }
 )
 export default instance
+function toLogin() {
+  store.commit('user/removeStoreToken')
+  router.push({
+    path: '/login',
+    query: {
+      back: router.currentRoute.fullPath
+    }
+  })
+}

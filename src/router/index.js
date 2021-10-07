@@ -12,13 +12,20 @@ import Search from '@/views/Search'
 import Results from '@/views/Search/Results'
 import SearchContent from '@/views/Article/SearchContent'
 import EditUserInfo from '@/views/layout/User/EditUserInfo'
+import Chat from '@/views/layout/User/Chat'
 Vue.use(VueRouter)
 const routes = [
   {
     path: '/',
     component: Layout,
     children: [
-      { path: '', component: Home },
+      {
+        path: '',
+        component: Home,
+        meta: {
+          ifKeepAlive: true
+        }
+      },
       { path: 'question', component: Question },
       { path: 'video', component: Video },
       { path: 'user', component: User }
@@ -29,6 +36,7 @@ const routes = [
   { path: '/search/results', component: Results },
   { path: '/search/results/searchcontent/:id', component: SearchContent },
   { path: '/user/edituserinfo', component: EditUserInfo },
+  { path: '/user/chat', component: Chat },
   { path: '*', component: NotFound }
 ]
 

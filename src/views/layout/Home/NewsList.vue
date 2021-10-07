@@ -1,5 +1,5 @@
 <template>
-  <div class="news_list">
+  <div class="news_list" @scroll="scrollFn" ref="newsList">
     <van-pull-refresh v-model="refreshing" @refresh="onRefresh">
       <van-list
         v-model="loading"
@@ -81,7 +81,8 @@ export default {
       popupShow: false,
       vanShow: true,
       artID: '',
-      reports
+      reports,
+      scrollTop: ''
     }
   },
   methods: {
@@ -131,7 +132,13 @@ export default {
     },
     processArticle(id) {
       this.$router.push(`/search/results/searchcontent/${id}`)
+    },
+    scrollFn() {
+      this.scrollTop = this.$refs.newsList.scrollTop
     }
+  },
+  activated() {
+    this.$refs.newsList.scrollTop = this.scrollTop
   },
   computed: {
     ...mapState('user', ['token'])

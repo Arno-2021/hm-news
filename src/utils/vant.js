@@ -26,9 +26,15 @@ import {
   ActionSheet,
   Search,
   Loading,
-  Divider
+  Divider,
+  Picker,
+  DatetimePicker,
+  Uploader
 } from 'vant'
 
+Vue.use(Uploader)
+Vue.use(DatetimePicker)
+Vue.use(Picker)
 Vue.use(Loading)
 Vue.use(Divider)
 Vue.use(Search)
